@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>HEALTH FIRST Dashboard</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{ background:#f4f6f9; }
+
+/* SIDEBAR */
+.sidebar{
+    width:230px;
+    height:100vh;
+    position:fixed;
+    left:0; top:0;
+    background:#0d6efd;
+    padding-top:20px;
+    overflow-y:auto;
+}
+.sidebar h3{ color:white; text-align:center; margin-bottom:20px; }
+.sidebar a{
+    display:block; color:white;
+    padding:10px 15px; margin:2px 8px;
+    border-radius:8px; text-decoration:none;
+}
+.sidebar a:hover{ background:white; color:#0d6efd; }
+
+/* MAIN */
+.main{ margin-left:230px; padding:20px; }
+
+/* CARDS */
+.card-box{ padding:15px; border-radius:12px; color:white; }
+.blue{background:#0d6efd;} .green{background:#198754;}
+.red{background:#dc3545;} .orange{background:#fd7e14;}
+.purple{background:#6610f2;} .cyan{background:#0dcaf0;}
+
+/* CHART SIZE */
+.chart-box{ height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+.chart-box canvas{ width:100% !important; height:100% !important; }
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h3>HMS</h3>
+    <a href="#"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a href="#"><i class="bi bi-people"></i> Patients</a>
+    <a href="#"><i class="bi bi-person-badge"></i> Doctors</a>
+    <a href="#"><i class="bi bi-capsule"></i> Other employees</a>
+    <a href="#"><i class="bi bi-capsule"></i> Pharmacy</a>
+    <a href="#"><i class="bi bi-capsule"></i> Lab</a>
+    <a href="#"><i class="bi bi-calendar-check"></i> Appointments</a>
+    <a href="#"><i class="bi bi-cash-stack"></i> Payments</a>
+    <a href="#"><i class="bi bi-bar-chart"></i> Reports</a>
+    <a href="#"><i class="bi bi-gear"></i> Settings</a>
+    <a href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<h4>HEALTH FIRST Dashboard</h4>
+
+<!-- SUMMARY CARDS -->
+<div class="row g-2 mt-2">
+    <div class="col-md-3"><div class="card-box blue">Patients <h3>250</h3></div></div>
+    <div class="col-md-3"><div class="card-box green">Doctors <h3>45</h3></div></div>
+    <div class="col-md-3"><div class="card-box red">Appointments <h3>60</h3></div></div>
+    <div class="col-md-3"><div class="card-box orange">Payments <h3>120</h3></div></div>
+    <div class="col-md-3"><div class="card-box purple">Lab Tests <h3>300</h3></div></div>
+    <div class="col-md-3"><div class="card-box cyan">Medicines <h3>560</h3></div></div>
+    <div class="col-md-3"><div class="card-box green">Wards <h3>80</h3></div></div>
+    <div class="col-md-3"><div class="card-box orange">Employees <h3>150</h3></div></div>
+</div>
+
+<!-- CHARTS -->
+<div class="row mt-4 g-3">
+    <div class="col-md-6">
+        <div class="card p-3 shadow chart-box">
+            <h6>Patients Trend</h6>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3 shadow chart-box">
+            <h6>Overview</h6>
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-3">
+    <div class="col-md-6">
+        <div class="card p-3 shadow chart-box">
+            <h6>Monthly Payments</h6>
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3 shadow chart-box">
+            <h6>Departments</h6>
+            <canvas id="deptChart"></canvas>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- JS CHARTS -->
+<script>
+// LINE
+new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat'],
+        datasets: [{
+            label: 'Patients',
+            data: [20,35,25,40,55,30],
+            borderColor: '#198754',
+            backgroundColor: 'rgba(25,135,84,0.2)',
+            fill: true, tension: 0.4
+        }]
+    },
+    options: { responsive:true, maintainAspectRatio:false }
+});
+
+// PIE
+new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Patients','Doctors','Appointments','Payments'],
+        datasets: [{
+            data: [250,45,60,120],
+            backgroundColor: ['#0d6efd','#198754','#dc3545','#fd7e14']
+        }]
+    },
+    options: { responsive:true, maintainAspectRatio:true, aspectRatio:1 }
+});
+
+// BAR - Monthly Payments
+new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Jan','Feb','Mar','Apr','May'],
+        datasets: [{
+            label: 'Payments',
+            data: [120,150,180,200,170],
+            backgroundColor: '#0d6efd'
+        }]
+    },
+    options: { responsive:true, maintainAspectRatio:false }
+});
+
+// DOUGHNUT - Departments
+new Chart(document.getElementById('deptChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Emergency','OPD','Surgery','Ward'],
+        datasets: [{
+            data: [30,50,20,40],
+            backgroundColor: ['#6610f2','#20c997','#ffc107','#0dcaf0']
+        }]
+    },
+    options: { responsive:true, maintainAspectRatio:true, aspectRatio:1 }
+});
+</script>
+
+</body>
+</html>
